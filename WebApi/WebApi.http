@@ -4,3 +4,11 @@ GET {{WebApi_HostAddress}}/weatherforecast/
 Accept: application/json
 
 ###
+
+GET {{WebApi_HostAddress}}/api/values
+
+###
+@myMalue = 123
+POST {{WebApi_HostAddress}}/api/values/{{myMalue}}
+
+###

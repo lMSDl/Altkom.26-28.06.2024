@@ -1,7 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
 using WebApiAot;
-using static System.Formats.Asn1.AsnWriter;
 
 var builder = WebApplication.CreateSlimBuilder(args);
 builder.Services.AddSqlServer<MyDBContext>("Data Source=(local);Database=aot;Integrated security=true;TrustServerCertificate=true");
@@ -13,7 +12,7 @@ builder.Services.ConfigureHttpJsonOptions(options =>
 
 var app = builder.Build();
 
-using var scope = app.Services.CreateScope();
+//using var scope = app.Services.CreateScope();
 //scope.ServiceProvider.GetService<MyDBContext>().Database.EnsureCreated();
 
 var sampleTodos = new Todo[] {
