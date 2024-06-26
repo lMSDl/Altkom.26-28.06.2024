@@ -4,10 +4,10 @@ using Models;
 
 namespace WebApi.Controllers
 {
-    public class ShoppingListsController : ApiController
+    public class ShoppingListsController : CrudController<ShoppingList>
     {
 
-        static ICollection<ShoppingList> _shoppingLists = new List<ShoppingList>();
+        /*static ICollection<ShoppingList> _shoppingLists = new List<ShoppingList>();
 
         [HttpGet]
         public IActionResult Get()
@@ -65,6 +65,6 @@ namespace WebApi.Controllers
             _shoppingLists.Remove(shoppngList);
 
             return NoContent();
-        }
+        }*/
     }
 }

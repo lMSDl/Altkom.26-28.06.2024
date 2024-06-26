@@ -12,3 +12,45 @@ GET {{WebApi_HostAddress}}/api/values
 POST {{WebApi_HostAddress}}/api/values/{{myMalue}}
 
 ###
+
+POST {{WebApi_HostAddress}}/api/shoppinglists
+Content-Type: application/json
+
+{
+  "Name": "moja lista"
+}
+
+###
+
+GET {{WebApi_HostAddress}}/api/shoppinglists
+Content-Type: application/json
+
+###
+
+POST {{WebApi_HostAddress}}/api/people
+Content-Type: application/json
+
+{
+  "FirstName": "Ewa",
+  "LastName": "Ewowoska",
+  "Age": "54"
+}
+
+###
+
+GET {{WebApi_HostAddress}}/api/people
+Content-Type: application/json
+
+###
+DELETE {{WebApi_HostAddress}}/api/shoppinglists/1
+Content-Type: application/json
+
+###
+DELETE {{WebApi_HostAddress}}/api/people/1
+Content-Type: application/json
+
+###
+GET {{WebApi_HostAddress}}/api/people/search?firstName=ewa
+Content-Type: application/json
+
+###
