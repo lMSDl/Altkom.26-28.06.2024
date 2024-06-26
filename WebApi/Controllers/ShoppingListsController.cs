@@ -1,11 +1,29 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Models;
+using Services.Interfaces;
 
 namespace WebApi.Controllers
 {
     public class ShoppingListsController : CrudController<ShoppingList>
     {
+
+        //private ICrudService<Product> _productsService;
+
+        public ShoppingListsController(ICrudService<ShoppingList> service/*, ICrudService<Product> productsService*/) : base(service)
+        {
+            //_productsService = productsService;
+        }
+
+        /*[HttpGet("{id}/Products")]
+        public async Task<IActionResult> GetProducts(int id)
+        {
+            var items = (await _productsService.ReadAsync()).Where(x => x.ShoppingListId == id).ToList();
+
+
+            return Ok(items);
+
+        }*/
 
         /*static ICollection<ShoppingList> _shoppingLists = new List<ShoppingList>();
 

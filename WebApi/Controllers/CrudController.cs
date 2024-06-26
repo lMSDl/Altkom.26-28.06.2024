@@ -1,23 +1,28 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Models;
+using Services.Interfaces;
 
 namespace WebApi.Controllers
 {
     public abstract class CrudController<T> : ApiController where T : Entity
     {
-        static protected ICollection<T> _items = new List<T>();
+        private ICrudService<T> _service;
 
-        [HttpGet]
-        public IActionResult Get()
+        protected CrudController(ICrudService<T> service)
         {
-            return Ok(_items);
+            _service = service;
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Get()
+        {
+            return Ok(await _service.ReadAsync());
+        }
 
         [HttpGet("{id:int}")]
         public async Task<IActionResult> Get(int id)
         {
-            var item = _items.SingleOrDefault(x => x.Id == id);
+            var item = _service.ReadAsync(id);
             if (item == null)
                 return NotFound();
 
@@ -27,40 +32,35 @@ namespace WebApi.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post(T item)
+        public async Task<IActionResult >Post(T item)
         {
-            int id = _items.Select(x => x.Id).DefaultIfEmpty(0).Max() + 1;
-
-            item.Id = id;
-            _items.Add(item);
+            item = await _service.CreateAsync(item);
 
             //return Created($"api/ShoppingLists/{id}", shoppingList);
             return CreatedAtAction(nameof(Get), new { id = item.Id }, item);
         }
 
         [HttpPut("{id:int}")]
-        public IActionResult Put(int id, T item)
+        public async Task<IActionResult> Put(int id, T item)
         {
-            var localItem = _items.SingleOrDefault(x => x.Id == id);
+            var localItem = _service.ReadAsync(id);
             if (localItem == null)
                 return NotFound();
 
-            _items.Remove(localItem);
-            item.Id = id;
-            _items.Add(item);
+            await _service.UpdateAsync(id, item);
 
             return NoContent();
         }
 
 
         [HttpDelete("{id:int}")]
-        public virtual IActionResult Delete(int id)
+        public virtual async Task<IActionResult> Delete(int id)
         {
-            var item = _items.SingleOrDefault(x => x.Id == id);
-            if (item == null)
+            var localItem = _service.ReadAsync(id);
+            if (localItem == null)
                 return NotFound();
 
-            _items.Remove(item);
+            await _service.DeleteAsync(id);
 
             return NoContent();
         }

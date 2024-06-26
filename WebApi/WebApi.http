@@ -54,3 +54,8 @@ GET {{WebApi_HostAddress}}/api/people/search?firstName=ewa
 Content-Type: application/json
 
 ###
+
+GET {{WebApi_HostAddress}}/api/shoppinglists/57/Products
+Content-Type: application/json
+
+###
