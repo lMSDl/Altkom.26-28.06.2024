@@ -14,6 +14,8 @@ namespace WebApi.Controllers
         }
 
         [HttpGet("{id:int}")]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> Get(int id, CancellationToken cancellationToken)
         {
             var item = await _service.ReadAsync(id);
@@ -30,6 +32,8 @@ namespace WebApi.Controllers
         }
 
         [HttpPut("{id:int}")]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<IActionResult> Put(int id, T item)
         {
             var localItem = _service.ReadAsync(id);
@@ -43,6 +47,8 @@ namespace WebApi.Controllers
 
 
         [HttpDelete("{id:int}")]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         public virtual async Task<IActionResult> Delete(int id)
         {
             var localItem = _service.ReadAsync(id);

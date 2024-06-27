@@ -14,6 +14,12 @@ namespace WebApi.Controllers
             _peropleService = service;
         }
 
+        [ProducesResponseType<IEnumerable<Person>>(StatusCodes.Status200OK)]
+        public override Task<IActionResult> Get()
+        {
+            return base.Get();
+        }
+
         [NonAction] // wyłączenie ankcji z obsługi - usługa zachowuje się tak, jakby ta metoda nie była w ogóle zaimplementowana (kod 405)
         public override Task<IActionResult> Delete(int id)
         {
@@ -21,6 +27,7 @@ namespace WebApi.Controllers
         }
 
         [HttpGet("search")]
+        [ApiExplorerSettings(IgnoreApi = true)]
         public async Task<IActionResult> GetByFistName(string firstName)
         {
             return Ok(await _peropleService.SearchByFirstName(firstName));

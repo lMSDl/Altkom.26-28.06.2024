@@ -15,21 +15,21 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers()
-    .AddJsonOptions( x =>
+    /*.AddJsonOptions( x =>
     {
         x.JsonSerializerOptions.IgnoreReadOnlyProperties = true;
         x.JsonSerializerOptions.DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull;
         x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
-    })
+    })*/
 
 
-    /*.AddNewtonsoftJson(x =>
+    .AddNewtonsoftJson(x =>
     {
         x.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
         x.SerializerSettings.DefaultValueHandling = DefaultValueHandling.Ignore;
         x.SerializerSettings.PreserveReferencesHandling = PreserveReferencesHandling.Objects;
         x.SerializerSettings.DateFormatString = "yyy MM d hh:ss;mm";
-    })*/
+    })
     .AddXmlSerializerFormatters(); //wsparcie dla XML
 
 
@@ -48,6 +48,10 @@ builder.Services.AddTransient<ConsoleLogFilter>();
 builder.Services.AddTransient<UniquePersonFilter>();
 builder.Services.AddSingleton(x => new LimiterFilter(5));
 
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(x => x.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "WebAPI", Version = "v1" }))
+    .AddSwaggerGenNewtonsoftSupport();
+
 //rêczna rejestracja walidatorów
 //builder.Services.AddTransient<IValidator<ShoppingList>, ShoppingListValidator>();
 
@@ -60,6 +64,8 @@ var app = builder.Build();
 
 app.UseAuthorization();
 
+app.UseSwagger();
+app.UseSwaggerUI(x => x.SwaggerEndpoint("/swagger/v1/swagger.json", "SwaggerWebAPI v1"));
 app.MapControllers();
 
 app.Run();

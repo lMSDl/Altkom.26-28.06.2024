@@ -14,12 +14,14 @@ namespace WebApi.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get()
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public virtual async Task<IActionResult> Get()
         {
             return Ok(await _service.ReadAllAsync());
         }
 
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         public virtual async Task<IActionResult>Post(T item)
         {
             item = await _service.CreateAsync(item);

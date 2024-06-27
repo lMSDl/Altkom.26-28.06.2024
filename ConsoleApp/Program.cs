@@ -1,6 +1,7 @@
 ﻿
 
 using ConsoleApp;
+using Microsoft.VisualBasic;
 using Models;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
@@ -55,3 +56,8 @@ Console.WriteLine(  product.Name);
 
 
 Console.ReadLine();
+
+
+httpClient = new HttpClient();
+var webapi = new MyNamespace.MyClass("http://localhost:5087/api/", httpClient);
+
