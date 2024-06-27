@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace Models
 {
-    public class Product : ChildEntity
+    public class ChildEntity : Entity
     {
-        public string Name { get; set; }
-        public float Price { get; set; }
+        public int ParentId { get; set; }
     }
 }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Services.Interfaces
 {
-    public interface IPeopleService : ICrudService<Person>
+    public interface IPeopleService : ICRUDService<Person>
     {
         Task<IEnumerable<Person>> SearchByFirstName(string firstName);
     }

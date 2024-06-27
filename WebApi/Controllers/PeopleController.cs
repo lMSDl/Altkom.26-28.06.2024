@@ -5,7 +5,7 @@ using Services.Interfaces;
 
 namespace WebApi.Controllers
 {
-    public class PeopleController : CrudController<Person>
+    public class PeopleController : CRUDController<Person>
     {
         private IPeopleService _peropleService;
         public PeopleController(IPeopleService service) : base(service)

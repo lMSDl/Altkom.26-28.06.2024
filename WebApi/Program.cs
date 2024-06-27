@@ -12,9 +12,9 @@ builder.Services.AddSingleton<IList<int>>(x => [2, 3, 5, 1, 23]);
 builder.Services.AddTransient<EntityFaker<ShoppingList>, ShoppingListFaker>();
 builder.Services.AddTransient<EntityFaker<Person>, PersonFaker>();
 builder.Services.AddTransient<EntityFaker<Product>, ProductFaker>();
-builder.Services.AddSingleton<ICrudService<ShoppingList>, CrudService<ShoppingList>>();
+builder.Services.AddSingleton<ICRUDService<ShoppingList>, CRUDService<ShoppingList>>();
 builder.Services.AddSingleton<IPeopleService, PeopleService>();
-builder.Services.AddSingleton<ICrudService<Product>, CrudService<Product>>();
+builder.Services.AddSingleton<ICRUDChildService<Product>, CRUDChildService<Product>>();
 
 var app = builder.Build();
 

@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace Services.Interfaces
 {
-    public interface ICRUDService<T> : IRUDService<T>
+    public interface IRUDService<T>
     {
-        Task<IEnumerable<T>> ReadAllAsync();
-        Task<T> CreateAsync(T entity);
+        Task<T?> ReadAsync(int id);
+        Task UpdateAsync(int id, T entity);
+        Task DeleteAsync(int id);
     }
 }
