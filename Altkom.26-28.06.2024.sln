@@ -3,19 +3,21 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.35013.160
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApp", "WebApp\WebApp.csproj", "{F28B4512-7843-4B32-B34C-55BA17F4D524}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApp", "WebApp\WebApp.csproj", "{F28B4512-7843-4B32-B34C-55BA17F4D524}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebMinimalAPI", "WebMinimalAPI\WebMinimalAPI.csproj", "{43B8D1F1-17A4-4DBA-B070-6B81C18D3688}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebMinimalAPI", "WebMinimalAPI\WebMinimalAPI.csproj", "{43B8D1F1-17A4-4DBA-B070-6B81C18D3688}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApi", "WebApi\WebApi.csproj", "{9999C9E1-C01E-4E8F-8872-EE6B65776193}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApi", "WebApi\WebApi.csproj", "{9999C9E1-C01E-4E8F-8872-EE6B65776193}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApiAot", "WebApiAot\WebApiAot.csproj", "{40715ED3-1C29-4B89-A548-0ACC6B18A70F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApiAot", "WebApiAot\WebApiAot.csproj", "{40715ED3-1C29-4B89-A548-0ACC6B18A70F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Models", "Models\Models.csproj", "{E905243C-8397-4ECA-953B-A8CE780BD92A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Models", "Models\Models.csproj", "{E905243C-8397-4ECA-953B-A8CE780BD92A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services.Interfaces", "Services.Interfaces\Services.Interfaces.csproj", "{0EC63ACA-F106-4ABB-8373-AE9D78DC963E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services.Interfaces", "Services.Interfaces\Services.Interfaces.csproj", "{0EC63ACA-F106-4ABB-8373-AE9D78DC963E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services", "Services\Services.csproj", "{90210F3A-B8AA-4C60-A601-3C7C42DDAF4C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services", "Services\Services.csproj", "{90210F3A-B8AA-4C60-A601-3C7C42DDAF4C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp", "ConsoleApp\ConsoleApp.csproj", "{D38D1A34-9C14-4566-AFEF-0198D83C099D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{90210F3A-B8AA-4C60-A601-3C7C42DDAF4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{90210F3A-B8AA-4C60-A601-3C7C42DDAF4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{90210F3A-B8AA-4C60-A601-3C7C42DDAF4C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D38D1A34-9C14-4566-AFEF-0198D83C099D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D38D1A34-9C14-4566-AFEF-0198D83C099D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D38D1A34-9C14-4566-AFEF-0198D83C099D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D38D1A34-9C14-4566-AFEF-0198D83C099D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
