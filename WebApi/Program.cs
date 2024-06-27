@@ -40,8 +40,11 @@ builder.Services.AddSingleton<ICRUDService<ShoppingList>, CRUDService<ShoppingLi
 builder.Services.AddSingleton<IPeopleService, PeopleService>();
 builder.Services.AddSingleton<ICRUDChildService<Product>, CRUDChildService<Product>>();
 
-builder.Services.AddFluentValidationAutoValidation();
-builder.Services.AddTransient<IValidator<ShoppingList>, ShoppingListValidator>();
+builder.Services.AddFluentValidationAutoValidation()
+    .AddValidatorsFromAssemblyContaining<Program>();
+
+//rêczna rejestracja walidatorów
+//builder.Services.AddTransient<IValidator<ShoppingList>, ShoppingListValidator>();
 
 //zawieszenie automatycznej walidacji modelu
 //builder.Services.Configure<ApiBehaviorOptions>(x => x.SuppressModelStateInvalidFilter = true);
