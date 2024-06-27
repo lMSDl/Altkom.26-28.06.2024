@@ -4,7 +4,10 @@ using Services.Bogus.Fakers;
 using Services.Interfaces;
 using System.Text.Json.Serialization;
 using Newtonsoft.Json;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
+using FluentValidation;
+using WebApi.Validatiors;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -37,8 +40,11 @@ builder.Services.AddSingleton<ICRUDService<ShoppingList>, CRUDService<ShoppingLi
 builder.Services.AddSingleton<IPeopleService, PeopleService>();
 builder.Services.AddSingleton<ICRUDChildService<Product>, CRUDChildService<Product>>();
 
+builder.Services.AddFluentValidationAutoValidation();
+builder.Services.AddTransient<IValidator<ShoppingList>, ShoppingListValidator>();
+
 //zawieszenie automatycznej walidacji modelu
-builder.Services.Configure<ApiBehaviorOptions>(x => x.SuppressModelStateInvalidFilter = true);
+//builder.Services.Configure<ApiBehaviorOptions>(x => x.SuppressModelStateInvalidFilter = true);
 
 var app = builder.Build();
 
