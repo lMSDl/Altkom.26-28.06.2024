@@ -62,10 +62,10 @@ var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 
-app.UseAuthorization();
-
 app.UseSwagger();
 app.UseSwaggerUI(x => x.SwaggerEndpoint("/swagger/v1/swagger.json", "SwaggerWebAPI v1"));
+
+
 app.MapControllers();
 
 app.Run();

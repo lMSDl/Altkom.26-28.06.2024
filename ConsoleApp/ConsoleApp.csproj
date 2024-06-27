@@ -8,20 +8,25 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <OpenApiReference Include="..\..\..\..\..\Desktop\openapi.json" CodeGenerator="NSwagCSharp" Namespace="MyNamespace" ClassName="MyClass" Link="OpenAPIs\openapi.json" />
+    <OpenApiReference Include="..\..\..\..\..\Desktop\openapi.json">
+      <CodeGenerator>NSwagCSharp</CodeGenerator>
+      <Namespace>MyNamespace</Namespace>
+      <ClassName>MyClass</ClassName>
+      <Link>OpenAPIs\openapi.json</Link>
+    </OpenApiReference>
   </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.ApiDescription.Client" Version="7.0.2">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-    <PackageReference Include="NSwag.ApiDescription.Client" Version="13.18.2">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-  </ItemGroup>
+	
+	<ItemGroup>
+		<PackageReference Include="Microsoft.Extensions.ApiDescription.Client" Version="8.0.6">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+		<PackageReference Include="NSwag.ApiDescription.Client" Version="13.18.2">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+	</ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Models\Models.csproj" />

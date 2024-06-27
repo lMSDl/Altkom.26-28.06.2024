@@ -14,7 +14,7 @@ namespace WebApi.Controllers
         }
 
         [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        //[ProducesResponseType(StatusCodes.Status200OK)]
         public virtual async Task<IActionResult> Get()
         {
             return Ok(await _service.ReadAllAsync());

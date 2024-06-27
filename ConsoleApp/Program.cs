@@ -52,12 +52,16 @@ var webApiClient = new WebApiClient("http://localhost:5087/api/");
 
 product = await webApiClient.GetAsync<Product>($"Products/{product.Id}");
 
-Console.WriteLine(  product.Name);
+Console.WriteLine(product.Name);
 
 
 Console.ReadLine();
 
 
 httpClient = new HttpClient();
-var webapi = new MyNamespace.MyClass("http://localhost:5087/api/", httpClient);
+var webapi = new MyNamespace.MyClass("http://localhost:5087/", httpClient);
+foreach (var item in await webapi.PeopleAllAsync())
+{
+    Console.WriteLine($"{item.FirstName} {item.LastName}");
+}
 
