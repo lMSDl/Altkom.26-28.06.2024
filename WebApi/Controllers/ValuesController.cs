@@ -16,6 +16,7 @@ namespace WebApi.Controllers
 
         //GET: localhost:<port>/api/values
         [HttpGet] //oznaczenie metody GET - metoda nie musi nosić w nazwie lub nazywać się "Get"
+        [Produces("application/xml")] //wymuszenie odpowiedzi jako XML
         public IEnumerable<int> AlaMaKota()
         {
             return _values;

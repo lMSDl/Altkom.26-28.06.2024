@@ -10,5 +10,9 @@ namespace Models
     {
         public string Name { get; set; }
         public float Price { get; set; }
+
+        public int DefaultInt { get; set; }
+        public string DefaultString { get; set; }
+        public float ReadOnlyFloat => 50;
     }
 }

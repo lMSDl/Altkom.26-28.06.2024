@@ -1,14 +1,20 @@
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddSqlServer<DbContext>("Data Source=(local);Database=aot;Integrated security=true;TrustServerCertificate=true");
+builder.Services.ConfigureHttpJsonOptions(x =>
+{
 
+    x.SerializerOptions.IgnoreReadOnlyProperties = true;
+    x.SerializerOptions.DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull;
+    x.SerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
+});
 // Add services to the container.
 
 var app = builder.Build();
 
-app.Services.GetService<DbContext>().Database.EnsureCreated();
 
 // Configure the HTTP request pipeline.
 
@@ -35,4 +41,8 @@ app.Run();
 internal record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
 {
     public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
+
+    public int DefaultInt { get; set; }
+    public string DefaultString { get; set; }
+    public float ReadOnlyFloat => 50;
 }

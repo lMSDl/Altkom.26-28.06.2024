@@ -16,7 +16,7 @@ namespace WebApi.Controllers
         [HttpGet("{id:int}")]
         public async Task<IActionResult> Get(int id, CancellationToken cancellationToken)
         {
-            var item = _service.ReadAsync(id);
+            var item = await _service.ReadAsync(id);
             if (item == null)
                 return NotFound();
 
