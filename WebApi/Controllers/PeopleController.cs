@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Models;
 using Services.Interfaces;
+using WebApi.Filters;
 
 namespace WebApi.Controllers
 {
@@ -23,6 +24,12 @@ namespace WebApi.Controllers
         public async Task<IActionResult> GetByFistName(string firstName)
         {
             return Ok(await _peropleService.SearchByFirstName(firstName));
+        }
+
+        [ServiceFilter<UniquePersonFilter>]
+        public override Task<IActionResult> Post(Person item)
+        {
+            return base.Post(item);
         }
     }
 }

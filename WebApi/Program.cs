@@ -8,6 +8,7 @@ using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
 using FluentValidation;
 using WebApi.Validatiors;
+using WebApi.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +22,7 @@ builder.Services.AddControllers()
         x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
     })
 
+
     /*.AddNewtonsoftJson(x =>
     {
         x.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
@@ -29,7 +31,6 @@ builder.Services.AddControllers()
         x.SerializerSettings.DateFormatString = "yyy MM d hh:ss;mm";
     })*/
     .AddXmlSerializerFormatters(); //wsparcie dla XML
-
 
 
 builder.Services.AddSingleton<IList<int>>(x => [2, 3, 5, 1, 23]);
@@ -42,6 +43,10 @@ builder.Services.AddSingleton<ICRUDChildService<Product>, CRUDChildService<Produ
 
 builder.Services.AddFluentValidationAutoValidation()
     .AddValidatorsFromAssemblyContaining<Program>();
+
+builder.Services.AddTransient<ConsoleLogFilter>();
+builder.Services.AddTransient<UniquePersonFilter>();
+builder.Services.AddSingleton(x => new LimiterFilter(5));
 
 //rêczna rejestracja walidatorów
 //builder.Services.AddTransient<IValidator<ShoppingList>, ShoppingListValidator>();
@@ -57,8 +62,6 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-
 app.Run();
-
 
 //GET api/shoppingLists/3/products

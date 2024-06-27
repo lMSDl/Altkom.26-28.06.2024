@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using WebApi.Filters;
 
 namespace WebApi.Controllers
 {    
@@ -17,6 +18,7 @@ namespace WebApi.Controllers
         //GET: localhost:<port>/api/values
         [HttpGet] //oznaczenie metody GET - metoda nie musi nosić w nazwie lub nazywać się "Get"
         [Produces("application/xml")] //wymuszenie odpowiedzi jako XML
+        [ServiceFilter<LimiterFilter>]
         public IEnumerable<int> AlaMaKota()
         {
             return _values;

@@ -17,7 +17,6 @@ namespace WebApi.Validatiors
 
 
             RuleFor(x => x.Name).Must(x => !service.ReadAllAsync().Result.Any(xx => xx.Name == x)).WithMessage("Lista o tej nazwie już istnieje");
-
         }
     }
 }

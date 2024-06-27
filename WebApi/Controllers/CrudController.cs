@@ -20,7 +20,7 @@ namespace WebApi.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult>Post(T item)
+        public virtual async Task<IActionResult>Post(T item)
         {
             item = await _service.CreateAsync(item);
 

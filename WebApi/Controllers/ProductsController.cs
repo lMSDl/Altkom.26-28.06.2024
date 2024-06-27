@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Models;
 using Services.Interfaces;
+using WebApi.Filters;
 
 namespace WebApi.Controllers
 {
 
+    [ServiceFilter<ConsoleLogFilter>]
     public class ProductsController : CRUDChildController<Product, ShoppingList>
     {
         public ProductsController(ICRUDChildService<Product> service, ICRUDService<ShoppingList> parentService) : base(service, parentService)
