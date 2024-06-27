@@ -14,13 +14,17 @@ namespace WebApi.Controllers
         }
 
         [HttpGet("{id:int}")]
-        public async Task<IActionResult> Get(int id)
+        public async Task<IActionResult> Get(int id, CancellationToken cancellationToken)
         {
             var item = _service.ReadAsync(id);
             if (item == null)
                 return NotFound();
 
-            await Task.Delay(1000);
+            await Task.Delay(1000, cancellationToken);
+
+            cancellationToken.ThrowIfCancellationRequested();
+
+            await Task.Delay(500);
 
             return Ok(item);
         }
