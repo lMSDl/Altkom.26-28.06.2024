@@ -55,7 +55,19 @@ Content-Type: application/json
 
 ###
 
-GET {{WebApi_HostAddress}}/api/shoppinglists/3/Products
+GET {{WebApi_HostAddress}}/api/shoppinglists/1/Products
+Content-Type: application/json
+
+###
+
+POST {{WebApi_HostAddress}}/api/shoppinglists/1/Products
+Content-Type: application/json
+ {
+    "name": "Zabawka",
+    "price": 15.50
+  }
+###
+DELETE {{WebApi_HostAddress}}/api/Products/101
 Content-Type: application/json
 
 ###

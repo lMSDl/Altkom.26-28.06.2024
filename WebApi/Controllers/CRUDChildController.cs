@@ -15,18 +15,15 @@ namespace WebApi.Controllers
             _parentService = parentService;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetAll(int parentId)
+        public virtual async Task<IActionResult> GetAll(int parentId)
         {
-
             if (await _parentService.ReadAsync(parentId) == null)
                 return NotFound();
 
             return Ok(await _service.ReadAllAsync(parentId));
         }
 
-        [HttpPost]
-        public async Task<IActionResult>Post(int parentId, T item)
+        public virtual async Task<IActionResult>Post(int parentId, T item)
         {
             if (await _parentService.ReadAsync(parentId) == null)
                 return NotFound();
