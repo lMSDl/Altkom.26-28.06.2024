@@ -1,8 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Models;
 using Services.Interfaces;
-using System.Diagnostics.Tracing;
 
 namespace WebApi.Controllers
 {
@@ -20,9 +18,23 @@ namespace WebApi.Controllers
         }
 
         [HttpPost("/api/ShoppingLists/{parentId}/Products")]
-        public override Task<IActionResult> Post(int parentId, Product item)
+        public override async Task<IActionResult> Post(int parentId, Product item)
         {
-            return base.Post(parentId, item);
+
+            //Ręczna walidacja modelu
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var items = ((await GetAll(parentId)) as OkObjectResult)?.Value as IEnumerable<Product>;
+            if (items.Any(x => x.Name == item.Name))
+            {
+                //ręczne dodanie błędu walidacji
+                ModelState.AddModelError(nameof(Product.Name), "Ten produkt już znajduje się na liście zakupowej");
+
+                return BadRequest(ModelState);
+            }
+
+            return await base.Post(parentId, item);
         }
     }
 }

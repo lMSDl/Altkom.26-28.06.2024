@@ -4,18 +4,19 @@ using Services.Bogus.Fakers;
 using Services.Interfaces;
 using System.Text.Json.Serialization;
 using Newtonsoft.Json;
+using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllers()
-    /*.AddJsonOptions( x =>
+    .AddJsonOptions( x =>
     {
         x.JsonSerializerOptions.IgnoreReadOnlyProperties = true;
         x.JsonSerializerOptions.DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull;
         x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
-    });*/
+    })
 
     /*.AddNewtonsoftJson(x =>
     {
@@ -35,6 +36,9 @@ builder.Services.AddTransient<EntityFaker<Product>, ProductFaker>();
 builder.Services.AddSingleton<ICRUDService<ShoppingList>, CRUDService<ShoppingList>>();
 builder.Services.AddSingleton<IPeopleService, PeopleService>();
 builder.Services.AddSingleton<ICRUDChildService<Product>, CRUDChildService<Product>>();
+
+//zawieszenie automatycznej walidacji modelu
+builder.Services.Configure<ApiBehaviorOptions>(x => x.SuppressModelStateInvalidFilter = true);
 
 var app = builder.Build();
 
