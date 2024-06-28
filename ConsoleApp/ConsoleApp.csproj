@@ -17,6 +17,12 @@
   </ItemGroup>
 	
 	<ItemGroup>
+		<PackageReference Include="Google.Protobuf" Version="3.21.5" />
+		<PackageReference Include="Grpc.Net.ClientFactory" Version="2.49.0" />
+		<PackageReference Include="Grpc.Tools" Version="2.49.0">
+		  <PrivateAssets>all</PrivateAssets>
+		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
 		<PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="8.0.6" />
 		<PackageReference Include="Microsoft.Extensions.ApiDescription.Client" Version="8.0.6">
 			<PrivateAssets>all</PrivateAssets>
@@ -31,6 +37,12 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Models\Models.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Protobuf Include="..\GrpcService\Protos\people.proto" GrpcServices="Client">
+      <Link>Protos\people.proto</Link>
+    </Protobuf>
   </ItemGroup>
 
 </Project>

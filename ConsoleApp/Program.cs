@@ -1,6 +1,8 @@
 ﻿
 
 using ConsoleApp;
+using Grpc.Net.Client;
+using GrpcService.Protos;
 using Microsoft.AspNetCore.SignalR.Client;
 using Microsoft.VisualBasic;
 using Models;
@@ -9,22 +11,18 @@ using System.Net.Http.Json;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-var signalR = new HubConnectionBuilder().WithUrl("http://localhost:5087/SignalR/shoppinglists")
-        .WithAutomaticReconnect().Build();
 
-signalR.On<Product>("NewProductOnList", NewProductOnList);
+var channel = GrpcChannel.ForAddress("https://localhost:7259");
 
-void NewProductOnList(Product product)
-{
-    Console.WriteLine($"Nowy produkt: {product.Name}");
-}
+var client  = new GrpcService.Protos.PeopleService.PeopleServiceClient(channel);
 
+var people = await client.ReadAsync(new GrpcService.Protos.Void());
 
-await signalR.StartAsync();
+int id = people.Collection.FirstOrDefault().Id;
 
-await signalR.SendAsync("NewProductOnList", 3);
+await client.DeleteAsync(new Id { Value = id });
 
-await signalR.SendAsync("Join", Console.ReadLine());
+var person = await client.ReadByIdAsync(new Id { Value = id });
 
 Console.ReadLine();
 
@@ -140,6 +138,26 @@ static async Task SignalRDemo()
 
         await signalR.SendAsync("JoinGroup", groupName);
     }
+}
+
+static async Task SignalR()
+{
+    var signalR = new HubConnectionBuilder().WithUrl("http://localhost:5087/SignalR/shoppinglists")
+            .WithAutomaticReconnect().Build();
+
+    signalR.On<Product>("NewProductOnList", NewProductOnList);
+
+    void NewProductOnList(Product product)
+    {
+        Console.WriteLine($"Nowy produkt: {product.Name}");
+    }
+
+
+    await signalR.StartAsync();
+
+    await signalR.SendAsync("NewProductOnList", 3);
+
+    await signalR.SendAsync("Join", Console.ReadLine());
 }
 
 class MyItem
