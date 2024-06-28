@@ -9,54 +9,22 @@ using System.Net.Http.Json;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
+var signalR = new HubConnectionBuilder().WithUrl("http://localhost:5087/SignalR/shoppinglists")
+        .WithAutomaticReconnect().Build();
 
+signalR.On<Product>("NewProductOnList", NewProductOnList);
 
-var signalR = new HubConnectionBuilder().WithUrl("http://localhost:5172/SignalR/Demo")
-    .WithAutomaticReconnect().Build();
-
-//signalR.On<string>("TextMessage", x => TextMessage(x));
-signalR.On<string>("TextMessage", TextMessage);
-signalR.On<MyItem>("HandleItem", HandleItem);
-
-void HandleItem(MyItem item)
+void NewProductOnList(Product product)
 {
-    Console.WriteLine($"{item.Name} {item.Value2} {item.DateTime}");
+    Console.WriteLine($"Nowy produkt: {product.Name}");
 }
 
-signalR.Reconnecting += SignalR_Reconnecting;
-signalR.Reconnected += SignalR_Reconnected;
-
-Task SignalR_Reconnected(string? arg)
-{
-    Console.WriteLine(  "Connected");
-    return Task.CompletedTask;
-}
-
-Task SignalR_Reconnecting(Exception? arg)
-{
-    if(arg is not null)
-    {
-        Console.WriteLine(arg.Message);
-    }
-    Console.WriteLine(  "Reconnecting...");
-    return Task.CompletedTask;
-}
-
-void TextMessage(string message)
-{
-    Console.WriteLine(message);
-}
 
 await signalR.StartAsync();
 
-await signalR.SendAsync("SayHelloToOthers", $"Hello my name is {signalR.ConnectionId}");
+await signalR.SendAsync("NewProductOnList", 3);
 
-while (true)
-{
-    var groupName = Console.ReadLine();
-
-    await signalR.SendAsync("JoinGroup", groupName);
-}
+await signalR.SendAsync("Join", Console.ReadLine());
 
 Console.ReadLine();
 
@@ -124,6 +92,55 @@ static async Task WebAPI()
     }
 }
 
+static async Task SignalRDemo()
+{
+    var signalR = new HubConnectionBuilder().WithUrl("http://localhost:5172/SignalR/Demo")
+        .WithAutomaticReconnect().Build();
+
+    //signalR.On<string>("TextMessage", x => TextMessage(x));
+    signalR.On<string>("TextMessage", TextMessage);
+    signalR.On<MyItem>("HandleItem", HandleItem);
+
+    void HandleItem(MyItem item)
+    {
+        Console.WriteLine($"{item.Name} {item.Value2} {item.DateTime}");
+    }
+
+    signalR.Reconnecting += SignalR_Reconnecting;
+    signalR.Reconnected += SignalR_Reconnected;
+
+    Task SignalR_Reconnected(string? arg)
+    {
+        Console.WriteLine("Connected");
+        return Task.CompletedTask;
+    }
+
+    Task SignalR_Reconnecting(Exception? arg)
+    {
+        if (arg is not null)
+        {
+            Console.WriteLine(arg.Message);
+        }
+        Console.WriteLine("Reconnecting...");
+        return Task.CompletedTask;
+    }
+
+    void TextMessage(string message)
+    {
+        Console.WriteLine(message);
+    }
+
+    await signalR.StartAsync();
+
+    await signalR.SendAsync("SayHelloToOthers", $"Hello my name is {signalR.ConnectionId}");
+
+    while (true)
+    {
+        var groupName = Console.ReadLine();
+
+        await signalR.SendAsync("JoinGroup", groupName);
+    }
+}
 
 class MyItem
 {

@@ -1,18 +1,17 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Models;
 using Services.Interfaces;
 using WebApi.Filters;
+using WebApi.Hubs;
 
 namespace WebApi.Controllers
 {
 
     [ServiceFilter<ConsoleLogFilter>]
-    public class ProductsController : CRUDChildController<Product, ShoppingList>
+    public class ProductsController(ICRUDChildService<Product> service, ICRUDService<ShoppingList> parentService, ShoppingListsHub shoppinglistHub) : CRUDChildController<Product, ShoppingList>(service, parentService)
+    //public class ProductsController(ICRUDChildService<Product> service, ICRUDService<ShoppingList> parentService, IHubContext<ShoppingListsHub> shoppinglistHub) : CRUDChildController<Product, ShoppingList>(service, parentService)
     {
-        public ProductsController(ICRUDChildService<Product> service, ICRUDService<ShoppingList> parentService) : base(service, parentService)
-        {
-        }
-
         [HttpGet("/api/ShoppingLists/{parentId}/Products")]
         public override Task<IActionResult> GetAll(int parentId)
         {
@@ -36,7 +35,16 @@ namespace WebApi.Controllers
                 return BadRequest(ModelState);
             }
 
-            return await base.Post(parentId, item);
+            var result = await base.Post(parentId, item);
+
+            if(result is CreatedAtActionResult)
+            {
+                var groupName = (await parentService.ReadAsync(parentId))!.Name!;
+                await shoppinglistHub.NewProductOnList(groupName, item.Id);
+                //await shoppinglistHub.Clients.Group(groupName).SendAsync("NewProductOnList", await service.ReadAsync(item.Id));
+            }
+
+            return result;
         }
     }
 }

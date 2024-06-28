@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using FluentValidation;
 using WebApi.Validatiors;
 using WebApi.Filters;
+using WebApi.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -52,6 +53,11 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(x => x.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "WebAPI", Version = "v1" }))
     .AddSwaggerGenNewtonsoftSupport();
 
+builder.Services.AddSignalR();
+
+//rejestracja jako singleton w celu wstrzykniêcia ca³ego huba do controllera
+builder.Services.AddSingleton<ShoppingListsHub>();
+
 //rêczna rejestracja walidatorów
 //builder.Services.AddTransient<IValidator<ShoppingList>, ShoppingListValidator>();
 
@@ -65,7 +71,7 @@ var app = builder.Build();
 app.UseSwagger();
 app.UseSwaggerUI(x => x.SwaggerEndpoint("/swagger/v1/swagger.json", "SwaggerWebAPI v1"));
 
-
+app.MapHub<ShoppingListsHub>("signalr/shoppinglists");
 app.MapControllers();
 
 app.Run();
