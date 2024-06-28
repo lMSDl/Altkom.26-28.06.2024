@@ -1,7 +1,8 @@
 using Microsoft.AspNetCore.Authorization;
+using WebApp.SignalR;
 
 var builder = WebApplication.CreateBuilder(args);
-
+builder.Services.AddSignalR();
 
 var app = builder.Build();
 
@@ -33,5 +34,7 @@ app.MapGet("/values", () => values);
 app.MapDelete("/values/{value:int}", /*[Authorize]*/ (int value) => values.Remove(value));
 app.MapPost("/values/{value:int}", (int value) => values.Add(value));
 app.MapPut("/values/{oldValue:int}/{newValue:int}", (int oldValue, int newValue) => values[values.IndexOf(oldValue)] = newValue);
+
+app.MapHub<DemoHub>("SignalR/Demo");
 
 app.Run();
