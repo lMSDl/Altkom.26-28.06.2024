@@ -14,6 +14,54 @@ using System.Text.Json.Serialization;
 
 var channel = GrpcChannel.ForAddress("https://localhost:7259");
 
+
+var streamClient = new GrpcService.Protos.GrpcStream.GrpcStreamClient(channel);
+var downStream = streamClient.FromServer(new GrpcService.Protos.Request { Text = "Hello!" });
+var source = new CancellationTokenSource();
+var counter = 0;
+while (await downStream.ResponseStream.MoveNext(source.Token))
+{
+    Console.WriteLine($"{counter} {downStream.ResponseStream.Current.Text}");
+    counter++;
+    if (counter == 1000)
+    {
+        source.Cancel();
+        break;
+    }
+}
+
+var upStream = streamClient.ToServer();
+
+foreach (var letter in "Im using STREAM!!")
+    await upStream.RequestStream.WriteAsync(new GrpcService.Protos.Request { Text = letter.ToString() });
+
+await upStream.RequestStream.CompleteAsync();
+var response = await upStream.ResponseAsync;
+
+Console.WriteLine(response.Text);
+
+
+var streams = streamClient.FromAndToServer();
+
+_ = Task.Run(async () =>
+{
+    for (int i = 0; i < int.MaxValue; i++)
+    {
+        await streams.RequestStream.WriteAsync(new GrpcService.Protos.Request { Text = i.ToString() });
+    }
+    await streams.RequestStream.CompleteAsync();
+});
+
+_ = Task.Run(async () =>
+{
+    while (await streams.ResponseStream.MoveNext(CancellationToken.None))
+    {
+        Console.WriteLine(streams.ResponseStream.Current.Text);
+    }
+});
+
+
+
 var client  = new GrpcService.Protos.PeopleService.PeopleServiceClient(channel);
 
 var people = await client.ReadAsync(new GrpcService.Protos.Void());
@@ -23,6 +71,11 @@ int id = people.Collection.FirstOrDefault().Id;
 await client.DeleteAsync(new Id { Value = id });
 
 var person = await client.ReadByIdAsync(new Id { Value = id });
+
+person = await client.CreateAsync(new GrpcService.Protos.Person() { FirstName = "Ewa", LastName = "Ewowska" });
+
+
+
 
 Console.ReadLine();
 

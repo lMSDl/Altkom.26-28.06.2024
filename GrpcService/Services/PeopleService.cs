@@ -19,6 +19,15 @@ namespace GrpcService.Services
             return response;
         }
 
+        public override async Task<Person> Create(Person request, ServerCallContext context)
+        {
+            var person = await service.CreateAsync(new Models.Person { FirstName = request.FirstName, LastName = request.LastName });
+
+            var response = new Person { LastName = person.LastName, FirstName = person.FirstName, Id = person.Id };
+
+            return response;
+        }
+
         public override async Task<Person> ReadById(Id request, ServerCallContext context)
         {
             var person = await service.ReadAsync(request.Value);
