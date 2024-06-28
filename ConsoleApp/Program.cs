@@ -11,12 +11,31 @@ using System.Text.Json.Serialization;
 
 
 
-var signalR = new HubConnectionBuilder().WithUrl("http://localhost:5172/SignalR/Demo").Build();
+var signalR = new HubConnectionBuilder().WithUrl("http://localhost:5172/SignalR/Demo")
+    .WithAutomaticReconnect().Build();
 
 //signalR.On<string>("TextMessage", x => TextMessage(x));
 signalR.On<string>("TextMessage", TextMessage);
 
 
+signalR.Reconnecting += SignalR_Reconnecting;
+signalR.Reconnected += SignalR_Reconnected;
+
+Task SignalR_Reconnected(string? arg)
+{
+    Console.WriteLine(  "Connected");
+    return Task.CompletedTask;
+}
+
+Task SignalR_Reconnecting(Exception? arg)
+{
+    if(arg is not null)
+    {
+        Console.WriteLine(arg.Message);
+    }
+    Console.WriteLine(  "Reconnecting...");
+    return Task.CompletedTask;
+}
 
 void TextMessage(string message)
 {
