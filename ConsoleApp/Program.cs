@@ -16,7 +16,12 @@ var signalR = new HubConnectionBuilder().WithUrl("http://localhost:5172/SignalR/
 
 //signalR.On<string>("TextMessage", x => TextMessage(x));
 signalR.On<string>("TextMessage", TextMessage);
+signalR.On<MyItem>("HandleItem", HandleItem);
 
+void HandleItem(MyItem item)
+{
+    Console.WriteLine($"{item.Name} {item.Value2} {item.DateTime}");
+}
 
 signalR.Reconnecting += SignalR_Reconnecting;
 signalR.Reconnected += SignalR_Reconnected;
@@ -54,6 +59,9 @@ while (true)
 }
 
 Console.ReadLine();
+
+
+
 
 
 static async Task WebAPI()
@@ -116,3 +124,10 @@ static async Task WebAPI()
     }
 }
 
+
+class MyItem
+{
+    public string Name { get; set; }
+    public int Value2 { get; set; }
+    public DateTime DateTime { get; set; }
+}
