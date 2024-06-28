@@ -10,6 +10,7 @@ using FluentValidation;
 using WebApi.Validatiors;
 using WebApi.Filters;
 using WebApi.Hubs;
+using WIndowsServices.Core;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -57,6 +58,8 @@ builder.Services.AddSignalR();
 
 //rejestracja jako singleton w celu wstrzykniêcia ca³ego huba do controllera
 builder.Services.AddSingleton<ShoppingListsHub>();
+
+builder.Services.AddHostedService<Worker>();
 
 //rêczna rejestracja walidatorów
 //builder.Services.AddTransient<IValidator<ShoppingList>, ShoppingListValidator>();
