@@ -23,6 +23,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OWIN", "OWIN\OWIN.csproj", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GrpcService", "GrpcService\GrpcService.csproj", "{351009B4-94C9-4E0F-9824-2697A35E5559}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HealthChecks", "HealthChecks\HealthChecks.csproj", "{AB6FF8DC-BA11-4082-A312-56040327DA7C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +71,10 @@ Global
 		{351009B4-94C9-4E0F-9824-2697A35E5559}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{351009B4-94C9-4E0F-9824-2697A35E5559}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{351009B4-94C9-4E0F-9824-2697A35E5559}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AB6FF8DC-BA11-4082-A312-56040327DA7C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB6FF8DC-BA11-4082-A312-56040327DA7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB6FF8DC-BA11-4082-A312-56040327DA7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB6FF8DC-BA11-4082-A312-56040327DA7C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
